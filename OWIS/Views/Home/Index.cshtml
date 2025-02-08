@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>OWIS Application</h2>
+<a href="#" class="btn btn-primary" id="employee-link">Employee</a>
+
+<!-- Employee Popup -->
+<div id="employeeModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="empId" placeholder="Enter Employee ID">
+                <button id="fetchEmployee">Get Employee</button>
+                <p id="empDetails"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        alert("jQuery is working!");
+    });
+    $("#fetchEmployee").click(function () {
+        var id = $("#empId").val();
+        $.get("/Home/GetEmployee?id=" + id, function (data) {
+            $("#empDetails").html("Name: " + data.employeeName + "<br>Dept: " + data.departmentName + "<br>Salary: " + data.salary);
+        });
+    });
+</script>
