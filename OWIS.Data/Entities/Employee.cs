@@ -8,10 +8,12 @@ namespace OWIS.Data.Entities
 {
     public class Employee
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int DepartmentId { get; set; }
-        public decimal Salary { get; set; }
+        public int EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
+        public string DepartmentName { get; set; }
+        //public int DepartmentId { get; set; }
+        public decimal EmployeeSalary { get; set; }
         public Department Department { get; set; }
+        public Salary Salary { get; set; }
     }
 }

@@ -15,7 +15,8 @@ namespace OWIS.Data
         {
         }
 
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employee { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Salary> Salary { get; set; }
     }
 }

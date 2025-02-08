@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace OWIS.Data.Entities
 {
-    public class Department
+    public class Salary
     {
-        public int DepartmentId { get; set; }
-        public string DepartmentName { get; set; }
+        public int Id { get; set; }
+        public int EmployeeId { get; set; }
+        public decimal EmployeeSalary { get; set; }
     }
 }

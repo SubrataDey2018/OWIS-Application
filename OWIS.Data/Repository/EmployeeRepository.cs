@@ -1,4 +1,5 @@
-﻿using OWIS.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using OWIS.Data.Entities;
 using OWIS.Data.Interface;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,21 @@ namespace OWIS.Data.Repository
             _context = context;
         }
 
-        public Employee GetEmployeeById(int id)
+            public Employee GetEmployee(int id)
+            {
+            var employee = _context.Employee
+        .Include(e => e.Department)  // Include Department details
+        .Include(e => e.Salary)      // Include Salary details
+        .Where(e => e.EmployeeId == id)
+        .Select(e => new Employee
         {
-            return _context.Employees.Where(e => e.Id == id).FirstOrDefault();
+            EmployeeName = e.EmployeeName,
+            DepartmentName = e.Department.DepartmentName,
+            EmployeeSalary = e.Salary.EmployeeSalary  // Use renamed column
+        })
+        .FirstOrDefault();
+
+            return employee;
+        }
         }
     }
-}

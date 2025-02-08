@@ -2,34 +2,81 @@
     ViewData["Title"] = "Home";
 }
 
-<h2>OWIS Application</h2>
-<a href="#" class="btn btn-primary" id="employee-link">Employee</a>
+<h2>Welcome to OWIS</h2>
 
-<!-- Employee Popup -->
-<div id="employeeModal" class="modal" tabindex="-1">
+<!-- Links -->
+<a href="#" class="btn btn-primary" id="employeeLink">Employee</a>
+<a href="#" class="btn btn-secondary">Department</a>
+<a href="#" class="btn btn-success">Salary</a>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Employee Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title" id="employeeModalLabel">Employee Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="text" id="empId" placeholder="Enter Employee ID">
-                <button id="fetchEmployee">Get Employee</button>
-                <p id="empDetails"></p>
+                <label>Employee ID:</label>
+                <input type="text" id="employeeId" class="form-control" placeholder="Enter Employee ID">
+
+                <label>Employee Name:</label>
+                <input type="text" id="employeeName" class="form-control" readonly>
+
+                <label>Department Name:</label>
+                <input type="text" id="departmentName" class="form-control" readonly>
+
+                <label>Salary:</label>
+                <input type="text" id="salary" class="form-control" readonly>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="fetchEmployee">OK</button>
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    <script src="~/js/site.js"></script>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-    $(document).ready(function () {
-        alert("jQuery is working!");
-    });
-    $("#fetchEmployee").click(function () {
-        var id = $("#empId").val();
-        $.get("/Home/GetEmployee?id=" + id, function (data) {
-            $("#empDetails").html("Name: " + data.employeeName + "<br>Dept: " + data.departmentName + "<br>Salary: " + data.salary);
+        $(document).ready(function () {
+            // Show modal when clicking Employee link
+            $("#employeeLink").click(function () {
+                $("#employeeModal").modal("show");
+            });
+
+            // Fetch Employee Data when clicking OK
+            $("#fetchEmployee").click(function () {
+                var empId = $("#employeeId").val();
+                if (empId.trim() === "") {
+                    alert("Please enter Employee ID.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/Home/GetEmployee",
+                    type: "GET",
+                    data: { id: empId },
+                    success: function (response) {
+                        if (response) {
+                            $("#employeeName").val(response.name);
+                            $("#departmentName").val(response.department);
+                            $("#salary").val(response.salary);
+                        } else {
+                            alert("Employee not found!");
+                        }
+                    },
+                    error: function () {
+                        alert("Error fetching employee data.");
+                    }
+                });
+            });
         });
-    });
+
 </script>
+}

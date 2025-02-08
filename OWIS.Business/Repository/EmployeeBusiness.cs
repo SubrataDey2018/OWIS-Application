@@ -20,13 +20,13 @@ namespace OWIS.Business.Repository
 
         public EmployeeData GetEmployee(int id)
         {
-            var employee = _employeeRepository.GetEmployeeById(id);
+            var employee = _employeeRepository.GetEmployee(id);
             return new EmployeeData
             {
-                EmployeeId = employee.Id,
-                EmployeeName = employee.Name,
-                DepartmentName = employee.Department.Name,
-                Salary = employee.Salary
+                EmployeeId = id,
+                EmployeeName = employee.EmployeeName,
+                DepartmentName = employee.DepartmentName,
+                EmployeeSalary = employee.EmployeeSalary
             };
         }
     }
