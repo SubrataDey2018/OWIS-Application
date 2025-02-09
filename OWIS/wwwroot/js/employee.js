@@ -3,7 +3,9 @@
     $("#employeeLink").click(function () {
         $("#employeeModal").modal("show");
     });
-
+    $('#employeeModal').on('hidden.bs.modal', function () {
+        $('#employeeForm')[0].reset(); // Reset all input fields
+    });
     // Fetch Employee Details on OK button click
     $("#btnFetchEmployee").click(function () {
         var empId = $("#employeeId").val();
