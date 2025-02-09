@@ -24,21 +24,7 @@ namespace OWIS.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult GetEmployee(int id)
-        {
-            var employee = _employeeBusiness.GetEmployee(id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
-            return Json(new
-            {
-                name = employee.EmployeeName,
-                department = employee.DepartmentName,
-                salary = employee.EmployeeSalary
-            });
-        }
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

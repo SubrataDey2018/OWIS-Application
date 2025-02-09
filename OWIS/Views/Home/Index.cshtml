@@ -1,82 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Home";
+﻿<!-- Views/Home/Index.cshtml -->
+@{
+    ViewData["Title"] = "Home Page";
 }
 
-<h2>Welcome to OWIS</h2>
+<div class="container text-center">
+    <h2>Welcome to OWIS</h2>
+    <hr />
 
-<!-- Links -->
-<a href="#" class="btn btn-primary" id="employeeLink">Employee</a>
-<a href="#" class="btn btn-secondary">Department</a>
-<a href="#" class="btn btn-success">Salary</a>
-
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="employeeModalLabel">Employee Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label>Employee ID:</label>
-                <input type="text" id="employeeId" class="form-control" placeholder="Enter Employee ID">
-
-                <label>Employee Name:</label>
-                <input type="text" id="employeeName" class="form-control" readonly>
-
-                <label>Department Name:</label>
-                <input type="text" id="departmentName" class="form-control" readonly>
-
-                <label>Salary:</label>
-                <input type="text" id="salary" class="form-control" readonly>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="fetchEmployee">OK</button>
-            </div>
-        </div>
-    </div>
+    <a href="#" id="employeeLink" class="btn btn-primary">Employee</a>
+    <a href="#" id="departmentLink" class="btn btn-secondary">Department</a>
+    <a href="#" id="salaryLink" class="btn btn-success">Salary</a>
 </div>
 
+<!-- Load Employee Modal -->
+@Html.Partial("EmployeeModals/_EmployeeModal")
 @section Scripts {
-    <script src="~/js/site.js"></script>
-
-
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script>
-        $(document).ready(function () {
-            // Show modal when clicking Employee link
-            $("#employeeLink").click(function () {
-                $("#employeeModal").modal("show");
-            });
-
-            // Fetch Employee Data when clicking OK
-            $("#fetchEmployee").click(function () {
-                var empId = $("#employeeId").val();
-                if (empId.trim() === "") {
-                    alert("Please enter Employee ID.");
-                    return;
-                }
-
-                $.ajax({
-                    url: "/Home/GetEmployee",
-                    type: "GET",
-                    data: { id: empId },
-                    success: function (response) {
-                        if (response) {
-                            $("#employeeName").val(response.name);
-                            $("#departmentName").val(response.department);
-                            $("#salary").val(response.salary);
-                        } else {
-                            alert("Employee not found!");
-                        }
-                    },
-                    error: function () {
-                        alert("Error fetching employee data.");
-                    }
-                });
-            });
-        });
-
-</script>
+    <script src="~/js/employee.js"></script>
 }
+

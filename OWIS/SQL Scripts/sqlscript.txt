@@ -1,0 +1,42 @@
+-- Creating the Department table
+CREATE TABLE Department (
+    DepartmentId INT PRIMARY KEY,
+    DepartmentName VARCHAR(100) NOT NULL
+);
+
+-- Creating the Employee table
+CREATE TABLE Employee (
+    EmployeeId INT PRIMARY KEY,
+    DepartmentId INT,
+    EmployeeName VARCHAR(100) NOT NULL,
+    City VARCHAR(100) NOT NULL,
+    FOREIGN KEY (DepartmentId) REFERENCES Department(DepartmentId)
+);
+
+-- Creating the Salary table
+CREATE TABLE Salary (
+    Id INT PRIMARY KEY,
+    EmployeeId INT,
+    EmployeeSalary DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (EmployeeId) REFERENCES Employee(EmployeeId)
+);
+
+-- Inserting sample records into the Department table
+INSERT INTO Department (DepartmentId, DepartmentName) VALUES 
+(1, 'IT'),
+(2, 'HR'),
+(3, 'Finance');
+
+-- Inserting sample records into the Employee table
+INSERT INTO Employee (EmployeeId, DepartmentId, EmployeeName, City) VALUES 
+(101, 1, 'John Doe', 'New York'),
+(102, 2, 'Jane Smith', 'Los Angeles'),
+(103, 3, 'Alice Johnson', 'Chicago'),
+(104, 1, 'Bob Brown', 'Houston');
+
+-- Inserting sample records into the Salary table
+INSERT INTO Salary (Id, EmployeeId, EmployeeSalary) VALUES 
+(1, 101, 70000.00),
+(2, 102, 65000.00),
+(3, 103, 72000.00),
+(4, 104, 68000.00);
